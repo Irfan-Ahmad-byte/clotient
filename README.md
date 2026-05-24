@@ -33,20 +33,40 @@ You can run or compile Clotient either **locally** on your host system (requires
 ### Option A: Local Host Setup (Node.js & Rust)
 
 #### 1. Install System Prerequisites
-On Debian/Ubuntu-based distributions, install the required compilation libraries for Tauri:
-```bash
-sudo apt update
-sudo apt install -y \
-  build-essential \
-  curl \
-  wget \
-  libssl-dev \
-  libgtk-3-dev \
-  libsoup2.4-dev \
-  webkit2gtk-4.0 \
-  libjavascriptcoregtk-4.0-dev \
-  pkg-config
-```
+
+* **Linux (Debian/Ubuntu-based)**:
+  Install the required compilation libraries for Tauri:
+  ```bash
+  sudo apt update
+  sudo apt install -y \
+    build-essential \
+    curl \
+    wget \
+    libssl-dev \
+    libgtk-3-dev \
+    libsoup2.4-dev \
+    webkit2gtk-4.0 \
+    libjavascriptcoregtk-4.0-dev \
+    pkg-config
+  ```
+
+* **macOS**:
+  1. Install Xcode Command Line Tools:
+     ```bash
+     xcode-select --install
+     ```
+  2. Install Homebrew (if not already installed) and setup Node.js & Rust:
+     ```bash
+     brew install node rustup-init
+     rustup-init
+     ```
+     Follow the prompt to add cargo build paths to your shell profile.
+
+* **Windows**:
+  1. Download and install [Node.js](https://nodejs.org/).
+  2. Download and install [Rustup](https://rustup.rs/).
+  3. Install C++ Build Tools via the Visual Studio Installer (select the **Desktop development with C++** workload).
+  *(Refer to [Tauri Prerequisites Guide](https://tauri.app/start/prerequisites/) for detailed visual steps).*
 
 #### 2. Verify Toolchains
 Ensure you have Node.js (v18+) and Rust (1.75+) installed:
