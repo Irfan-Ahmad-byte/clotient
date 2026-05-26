@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import packageJson from "../package.json";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import RequestBuilder from "./components/RequestBuilder";
@@ -112,6 +113,7 @@ export default function App() {
 
   // 1. Initial Load from Local Storage on Mount
   useEffect(() => {
+    document.title = `Clotient Studio - v${packageJson.version}`;
     async function loadData() {
       try {
         const collectionsStr: string = await invoke("load_data", { fileName: "collections.json" });

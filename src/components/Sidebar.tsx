@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { ClotientCollection, ClotientRequest, Environment, HistoryItem } from "../types";
 import { importPostmanCollection, exportToPostmanCollection } from "../utils/postmanParser";
+import packageJson from "../../package.json";
 
 interface SidebarProps {
   collections: ClotientCollection[];
@@ -660,6 +661,12 @@ export default function Sidebar({
               ))}
           </div>
         )}
+      </div>
+
+      {/* Sidebar Footer / Version Info */}
+      <div className="p-2.5 border-t border-gray-850 bg-gray-950/30 text-center select-none text-[10px] text-gray-500 font-medium flex items-center justify-between shrink-0">
+        <span className="font-mono">v{packageJson.version}</span>
+        <span className="text-gray-600">Clotient Studio</span>
       </div>
 
       {/* Environments Modal */}
