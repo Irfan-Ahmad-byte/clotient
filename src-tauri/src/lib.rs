@@ -30,6 +30,7 @@ pub struct RustHttpResponse {
 async fn send_http_request(req: RustHttpRequest) -> Result<RustHttpResponse, String> {
     let client = reqwest::Client::builder()
         .timeout(std::time::Duration::from_millis(req.timeout_ms.unwrap_or(30000)))
+        .danger_accept_invalid_certs(true)
         .build()
         .map_err(|e| e.to_string())?;
 
