@@ -26,6 +26,16 @@ pub struct RustHttpResponse {
     pub content_type: String,
 }
 
+fn format_reqwest_err(e: reqwest::Error) -> String {
+    let mut msg = e.to_string();
+    let mut current = std::error::Error::source(&e);
+    while let Some(cause) = current {
+        msg.push_str(&format!("\nCaused by: {}", cause));
+        current = cause.source();
+    }
+    msg
+}
+
 #[tauri::command]
 async fn send_http_request(req: RustHttpRequest) -> Result<RustHttpResponse, String> {
     let client = reqwest::Client::builder()
@@ -33,7 +43,7 @@ async fn send_http_request(req: RustHttpRequest) -> Result<RustHttpResponse, Str
         .use_rustls_tls()
         .danger_accept_invalid_certs(true)
         .build()
-        .map_err(|e| e.to_string())?;
+        .map_err(format_reqwest_err)?;
 
     let method = reqwest::Method::from_bytes(req.method.as_bytes())
         .map_err(|_| "Invalid HTTP Method".to_string())?;
@@ -82,7 +92,7 @@ async fn send_http_request(req: RustHttpRequest) -> Result<RustHttpResponse, Str
     };
 
     let start_time = std::time::Instant::now();
-    let response = request_builder.send().await.map_err(|e| e.to_string())?;
+    let response = request_builder.send().await.map_err(format_reqwest_err)?;
     let duration = start_time.elapsed().as_millis() as u64;
 
     let status = response.status();
@@ -100,7 +110,7 @@ async fn send_http_request(req: RustHttpRequest) -> Result<RustHttpResponse, Str
         .cloned()
         .unwrap_or_else(|| "text/plain".to_string());
 
-    let body_bytes = response.bytes().await.map_err(|e| e.to_string())?;
+    let body_bytes = response.bytes().await.map_err(format_reqwest_err)?;
     let size_bytes = body_bytes.len();
     let body_string = String::from_utf8_lossy(&body_bytes).to_string();
 
