@@ -39,7 +39,9 @@ fn format_reqwest_err(e: reqwest::Error) -> String {
 #[tauri::command]
 async fn send_http_request(req: RustHttpRequest) -> Result<RustHttpResponse, String> {
     let client = reqwest::Client::builder()
-        .timeout(std::time::Duration::from_millis(req.timeout_ms.unwrap_or(30000)))
+        .timeout(std::time::Duration::from_millis(
+            req.timeout_ms.unwrap_or(30000),
+        ))
         .use_rustls_tls()
         .danger_accept_invalid_certs(true)
         .build()
@@ -143,7 +145,8 @@ fn save_data(app: tauri::AppHandle, file_name: String, content: String) -> Resul
     }
     let file_path = config_dir.join(file_name);
     let mut file = fs::File::create(file_path).map_err(|e| e.to_string())?;
-    file.write_all(content.as_bytes()).map_err(|e| e.to_string())?;
+    file.write_all(content.as_bytes())
+        .map_err(|e| e.to_string())?;
     Ok(())
 }
 
