@@ -24,6 +24,14 @@ Clotient is a lightweight, local-first, developer-focused REST API client built 
 
 ---
 
+## Download
+
+**Website:** [clottis.github.io/clotient](https://clottis.github.io/clotient/) — includes a **Download for macOS** button linked to the latest GitHub Release DMG.
+
+**Direct release:** [github.com/Clottis/clotient/releases/latest](https://github.com/Clottis/clotient/releases/latest)
+
+---
+
 ## Setup and Build Instructions
 
 You can run or compile Clotient either **locally** on your host system (requires Node.js & Rust) or inside a **Docker Container** (requires only Docker).
